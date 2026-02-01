@@ -19,7 +19,7 @@
 \RequirePackage[bookmarks, colorlinks]{hyperref}
 \RequirePackage[usenames,dvipsnames]{color}
 \RequirePackage{xifthen}
-\RequirePackage{namedef}
+\RequirePackage{pgfkeys}
 
 \hypersetup{%
   urlcolor=uvaOrange,
@@ -75,21 +75,27 @@
 
 }
 
-% Institution
-% Start Month and Year: Year or Date, Year. WYSIYG
-% End Month and Year: Year or Date, Year. WYSIYG
-% notComplete: "true" or "false". Adds an "Expected" string under the end year
-% degree: name of the degree
-% GPA: pass in as gpa/max_gpa so that max_gpa != 4 can be displayed
-% Extras:  Accomplishments such as honors
-% Location
-\named\def\educationEntry#[ins]#[start]#[end]#[notComplete]#[degree]#[gpa]#[extra]#[location]{
+\pgfkeys{
+  /educationEntry/.is family, /educationEntry,
+  ins/.estore in = \educationEntryInstitution,
+  start/.estore in = \educationEntryStart,
+  end/.estore in = \educationEntryEnd,
+  notComplete/.estore in = \educationEntryNotComplete,
+  degree/.estore in = \educationEntryDegree,
+  location/.estore in = \educationEntryLocation,
+  gpa/.estore in = \educationEntryGPA
+}
+
+\newcommand\educationEntry[2][]{
+  \pgfkeys{/educationEntry, #1}%
   \begin{minipage}[t]{0.20\textwidth}
     \hfill
     {
       \small
-      #[start] - #[end]
-      \ifnum\pdfstrcmp{#[notComplete]}{true}=0 %
+      \raggedright
+      \educationEntryStart - \educationEntryEnd
+      \par
+      \ifnum\pdfstrcmp{\educationEntryNotComplete}{true}=0%
       \raggedleft
       (Expected)
       \par
@@ -102,30 +108,71 @@
   \begin{minipage}[t]{0.75\textwidth}
     {
       \large
-      \textsc{#[ins]}
+      \textsc{\educationEntryInstitution}
     }
     \hfill
     {
       \small
-      #[location]
+      \educationEntryLocation
     }
     \newline
     {
       \small
-      \textsc{ #[degree]}
+      \textsc{\educationEntryDegree}
     }
     \newline
     {
       \small
-      GPA: #[gpa]
+      GPA: \educationEntryGPA
     }
 
-    \ifthenelse{\isempty{#[extra]}}{
+    \ifthenelse{\isempty{#2}}{
     }{%
       {\footnotesize
-        \emph{#[extra]}
+        \emph{#2}
       }%
     }
+  \end{minipage}
+  \vspace{0.25cm}
+}
+
+\pgfkeys{
+  /experienceEntry/.is family, /experienceEntry,
+  workplace/.estore in = \experienceEntryWorkplace,
+  start/.estore in = \experienceEntryStart,
+  end/.estore in = \experienceEntryEnd,
+  position/.estore in = \experienceEntryPosition,
+  location/.estore in = \experienceEntryLocation,
+}
+
+\newcommand\experienceEntry[2][]{
+  \pgfkeys{/experienceEntry, #1}%
+  \begin{minipage}[t]{0.20\textwidth}
+    \hfill
+    {
+      \small
+      \experienceEntryStart - \experienceEntryEnd
+    }
+  \end{minipage}
+  \hfill
+  \vline
+  \hfill
+  \begin{minipage}[t]{0.75\textwidth}
+    {
+      \large
+      \textsc{\experienceEntryWorkplace}
+    }
+    \hfill
+    {
+      \small
+      \experienceEntryLocation
+    }
+    \newline
+    {
+      \small
+      \textsc{\experienceEntryPosition}
+    }
+    #2
   \end{minipage}
   \vspace{0.25cm}
 }
