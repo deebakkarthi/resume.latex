@@ -243,29 +243,51 @@
   \vspace{10pt}
 }
 
-\pgfkeys{
+\pgfkeys{%
   /publicationEntry/.is family, /publicationEntry,
+  default/.style = {
+    title={},
+    venue={},
+    date={},
+    doi={},
+  },
   title/.estore in = \publicationEntryTitle,
   venue/.estore in = \publicationEntryVenue,
   date/.estore in = \publicationEntryDate,
   doi/.estore in = \publicationEntryDOI,
-}
+}%
+
 \newcommand\publicationEntry[1][]{
-  \pgfkeys{/publicationEntry, #1}%
+  \pgfkeys{/publicationEntry, default, #1}%
   \begin{minipage}[t]{0.08\textwidth}
     {
-      \small
-      \raggedright
-      \publicationEntryDate
+      \ifthenelse{\equal{\publicationEntryDate}{Forthcoming}}{
+        \footnotesize
+        \raggedright
+        \publicationEntryDate
+        \hfill
+        \par
+      }{
+        \small
+        \raggedright
+        \publicationEntryDate
+      }
     }
   \end{minipage}
   \hfill
   \vline
   \hfill
   \begin{minipage}[t]{0.89\textwidth}
-    \publicationEntryTitle\ in \textit{\publicationEntryVenue}.
-    \href{https://doi.org/\publicationEntryDOI}{doi: \publicationEntryDOI}
+    \publicationEntryTitle
+    \ifthenelse{\equal{\publicationEntryVenue}{}}{}{
+      \ in \textit{\publicationEntryVenue}
+    }.
+    \ifthenelse{\equal{\publicationEntryDOI}{}}{}{
+      \href{https://doi.org/\publicationEntryDOI}{doi: \publicationEntryDOI}
+    }
+    \par
   \end{minipage}
+  \par
   \vspace{10pt}
 }
 
