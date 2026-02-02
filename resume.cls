@@ -2,6 +2,7 @@
 \ProvidesClass{resume}
 
 \LoadClass[10pt]{article}
+\pagestyle{empty}
 
 \RequirePackage[
   letterpaper,
