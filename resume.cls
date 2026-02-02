@@ -9,18 +9,30 @@
 ]{geometry}
 \setlength{\parindent}{0pt}
 
+% Use this even if you are writing in English
+% Helps with the hyphenation
 \RequirePackage[USenglish]{babel}
+% 8-bit font encoding
 \RequirePackage[T1]{fontenc}
+% non-ascii chars in the src file
 \RequirePackage[utf8]{inputenc}
+% Style \title, \section, etc..
 \RequirePackage{titlesec}
-\RequirePackage{titling}
+% Change font
 \RequirePackage[oldstyle,proportional]{ETbb}
+% For fancy icons
 \RequirePackage{fontawesome5}
+% Create bookmarks
 \RequirePackage[bookmarks, colorlinks]{hyperref}
+% Custom color names
 \RequirePackage[usenames,dvipsnames]{color}
+% control flow for handling empty args
 \RequirePackage{xifthen}
+% provide args using [key=value]
 \RequirePackage{pgfkeys}
+% custom lists
 \RequirePackage{enumitem}
+% fancy bullet points
 \RequirePackage{pifont}
 
 \hypersetup{%
