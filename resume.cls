@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{resume}
 
-\LoadClass[12pt]{article}
+\LoadClass[10pt]{article}
 
 \RequirePackage[
   letterpaper,
@@ -20,6 +20,8 @@
 \RequirePackage[usenames,dvipsnames]{color}
 \RequirePackage{xifthen}
 \RequirePackage{pgfkeys}
+\RequirePackage{enumitem}
+\RequirePackage{pifont}
 
 \hypersetup{%
   urlcolor=uvaOrange,
@@ -28,8 +30,24 @@
   pdfproducer={}
 }
 
+\newlist{mylist}{itemize}{1}
+\setlist[mylist, 1]{
+  label=\ding{101},
+  topsep=1pt,
+  align=left,
+  leftmargin = *,
+}
+
+\newlist{projectLinks}{itemize*}{1}
+\setlist[projectLinks, 1]{
+  label=,
+  afterlabel=,
+  itemjoin={{\quad \ding{120}\quad }},
+}
+
 \titleformat{\section}
-{\Large\mdseries\scshape}{}{0em}{}
+{ \Large\mdseries\scshape}{}{0em}{}
+\titlespacing{\section}{0pt}{0.25\baselineskip}{0pt}
 
 \definecolor{uvaOrange}{RGB}{229, 114, 0}
 
@@ -88,24 +106,23 @@
 
 \newcommand\educationEntry[2][]{
   \pgfkeys{/educationEntry, #1}%
-  \begin{minipage}[t]{0.20\textwidth}
-    \hfill
+  \begin{minipage}[t]{0.08\textwidth}
     {
       \small
       \raggedright
-      \educationEntryStart - \educationEntryEnd
-      \par
+      \educationEntryStart\ -
+      \newline
+      \educationEntryEnd \hfill
       \ifnum\pdfstrcmp{\educationEntryNotComplete}{true}=0%
-      \raggedleft
+      \newline
       (Expected)
-      \par
       \fi
     }
   \end{minipage}
   \hfill
   \vline
   \hfill
-  \begin{minipage}[t]{0.75\textwidth}
+  \begin{minipage}[t]{0.89\textwidth}
     {
       \large
       \textsc{\educationEntryInstitution}
@@ -133,7 +150,8 @@
       }%
     }
   \end{minipage}
-  \vspace{0.25cm}
+  \par
+  \vspace{10pt}
 }
 
 \pgfkeys{
@@ -147,17 +165,19 @@
 
 \newcommand\experienceEntry[2][]{
   \pgfkeys{/experienceEntry, #1}%
-  \begin{minipage}[t]{0.20\textwidth}
-    \hfill
+  \begin{minipage}[t]{0.08\textwidth}
     {
       \small
-      \experienceEntryStart - \experienceEntryEnd
+      \raggedright
+      \experienceEntryStart\ -
+      \newline
+      \experienceEntryEnd
     }
   \end{minipage}
   \hfill
   \vline
   \hfill
-  \begin{minipage}[t]{0.75\textwidth}
+  \begin{minipage}[t]{0.89\textwidth}
     {
       \large
       \textsc{\experienceEntryWorkplace}
@@ -172,7 +192,97 @@
       \small
       \textsc{\experienceEntryPosition}
     }
+    {
+      \small
+      #2
+    }
+  \end{minipage}
+  \vspace{10pt}
+}
+
+\pgfkeys{
+  /projectEntry/.is family, /projectEntry,
+  name/.estore in = \projectEntryName,
+  start/.estore in = \projectEntryStart,
+  end/.estore in = \projectEntryEnd,
+}
+
+\newcommand\projectEntry[3][]{
+  \pgfkeys{/projectEntry, #1}%
+  \begin{minipage}[t]{0.08\textwidth}
+    {
+      \small
+      \raggedright
+      \projectEntryStart\ -
+      \newline
+      \projectEntryEnd
+    }
+  \end{minipage}
+  \hfill
+  \vline
+  \hfill
+  \begin{minipage}[t]{0.89\textwidth}
+    {
+      \large
+      \textsc{
+        \projectEntryName
+      }
+    }
+    {
+      \hfill
+      \small
+      \texttt{
+        #2
+      }
+    }
+    \par
+    {
+      #3
+    }
+  \end{minipage}
+  \vspace{10pt}
+}
+
+\pgfkeys{
+  /publicationEntry/.is family, /publicationEntry,
+  title/.estore in = \publicationEntryTitle,
+  venue/.estore in = \publicationEntryVenue,
+  date/.estore in = \publicationEntryDate,
+  doi/.estore in = \publicationEntryDOI,
+}
+\newcommand\publicationEntry[1][]{
+  \pgfkeys{/publicationEntry, #1}%
+  \begin{minipage}[t]{0.08\textwidth}
+    {
+      \small
+      \raggedright
+      \publicationEntryDate
+    }
+  \end{minipage}
+  \hfill
+  \vline
+  \hfill
+  \begin{minipage}[t]{0.89\textwidth}
+    \publicationEntryTitle\ in \textit{\publicationEntryVenue}.
+    \href{https://doi.org/\publicationEntryDOI}{doi: \publicationEntryDOI}
+  \end{minipage}
+  \vspace{10pt}
+}
+
+\newcommand\skillsEntry[2]{
+  \begin{minipage}[t]{0.08\textwidth}
+    {
+      \small
+      \begin{flushleft}
+        #1
+      \end{flushleft}
+    }
+  \end{minipage}
+  \hfill
+  \vline
+  \hfill
+  \begin{minipage}[t]{0.89\textwidth}
     #2
   \end{minipage}
-  \vspace{0.25cm}
+  \par
 }
