@@ -49,6 +49,7 @@
   topsep=1pt,
   align=left,
   leftmargin = *,
+  itemsep=0pt
 }
 
 \newlist{projectLinks}{itemize*}{1}
@@ -60,7 +61,7 @@
 
 \titleformat{\section}
 { \Large\mdseries\scshape}{}{0em}{}
-\titlespacing{\section}{0pt}{0.25\baselineskip}{0pt}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
 
 \definecolor{uvaOrange}{RGB}{229, 114, 0}
 
@@ -123,7 +124,7 @@
     {
       \small
       \raggedright
-      \educationEntryStart\ -
+      \mbox{\educationEntryStart\ -}
       \newline
       \educationEntryEnd \hfill
       \ifnum\pdfstrcmp{\educationEntryNotComplete}{true}=0%
@@ -163,8 +164,7 @@
       }%
     }
   \end{minipage}
-  \par
-  \vspace{10pt}
+  \vspace{3pt}
 }
 
 \pgfkeys{
@@ -182,7 +182,7 @@
     {
       \small
       \raggedright
-      \experienceEntryStart\ -
+      \mbox{\experienceEntryStart\ -}
       \newline
       \experienceEntryEnd
     }
@@ -210,7 +210,7 @@
       #2
     }
   \end{minipage}
-  \vspace{10pt}
+  \vspace{5pt}
 }
 
 \pgfkeys{
@@ -226,7 +226,7 @@
     {
       \small
       \raggedright
-      \projectEntryStart\ -
+      \mbox{\projectEntryStart\ -}
       \newline
       \projectEntryEnd
     }
@@ -244,16 +244,17 @@
     {
       \hfill
       \small
-      \texttt{
+      {
         #2
       }
     }
     \par
     {
+      \small
       #3
     }
   \end{minipage}
-  \vspace{10pt}
+  \vspace{5pt}
 }
 
 \pgfkeys{%
@@ -301,7 +302,7 @@
     \par
   \end{minipage}
   \par
-  \vspace{10pt}
+  \vspace{3pt}
 }
 
 \newcommand\skillsEntry[2]{
