@@ -292,10 +292,8 @@
   \vline
   \hfill
   \begin{minipage}[t]{0.89\textwidth}
-    \publicationEntryTitle
-    \ifthenelse{\equal{\publicationEntryVenue}{}}{}{
-      \ in \textit{\publicationEntryVenue}
-    }.
+    \publicationEntryTitle{}
+    \ifthenelse{\equal{\publicationEntryVenue}{}}{}{in \textit{\publicationEntryVenue}}.
     \ifthenelse{\equal{\publicationEntryDOI}{}}{}{
       \href{https://doi.org/\publicationEntryDOI}{doi: \publicationEntryDOI}
     }
@@ -321,4 +319,38 @@
     #2
   \end{minipage}
   \par
+}
+
+\pgfkeys{%
+  /serviceEntry/.is family, /serviceEntry,
+  default/.style = {
+    title={},
+    venue={},
+    website={}
+    date={},
+  },
+  title/.estore in = \serviceEntryTitle,
+  venue/.estore in = \serviceEntryVenue,
+  date/.estore in = \serviceEntryDate,
+  website/.estore in = \serviceEntryWebsite,
+}%
+
+\newcommand\serviceEntry[1][]{
+  \pgfkeys{/serviceEntry, default, #1}%
+  \begin{minipage}[t]{0.08\textwidth}
+    {
+        \small
+        \raggedright
+        \serviceEntryDate
+    }
+  \end{minipage}
+  \hfill
+  \vline
+  \hfill
+  \begin{minipage}[t]{0.89\textwidth}
+    \serviceEntryTitle{}. \href{\serviceEntryWebsite}{\serviceEntryVenue{}}
+    \par
+  \end{minipage}
+  \par
+  \vspace{3pt}
 }
