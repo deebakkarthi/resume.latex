@@ -199,7 +199,13 @@
   \begin{minipage}[t]{0.89\textwidth}
     {
       \large
-      \textsc{\experienceEntryWorkplace}
+      \ifthenelse{\equal{\experienceEntryWorkplace}{University of Virginia}}
+      {
+        \textsc{University}{\small\textit{of}}\textsc{Virginia}
+      }
+      {
+        \textsc{\experienceEntryWorkplace}
+      }
     }
     \hfill
     {
