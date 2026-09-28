@@ -139,7 +139,13 @@
   \begin{minipage}[t]{0.89\textwidth}
     {
       \large
-      \textsc{\educationEntryInstitution}
+      \ifthenelse{\equal{\educationEntryInstitution}{University of Virginia}}
+      {
+        \textsc{University}{\small\textit{of}}\textsc{Virginia}
+      }
+      {
+        \textsc{\educationEntryInstitution}
+      }
     }
     \hfill
     {
@@ -293,7 +299,8 @@
   \hfill
   \begin{minipage}[t]{0.89\textwidth}
     \publicationEntryTitle{}
-    \ifthenelse{\equal{\publicationEntryVenue}{}}{}{in \textit{\publicationEntryVenue}}.
+    \ifthenelse{\equal{\publicationEntryVenue}{}}{}{in
+    \textit{\publicationEntryVenue}}.
     \ifthenelse{\equal{\publicationEntryDOI}{}}{}{
       \href{https://doi.org/\publicationEntryDOI}{doi: \publicationEntryDOI}
     }
@@ -339,9 +346,9 @@
   \pgfkeys{/serviceEntry, default, #1}%
   \begin{minipage}[t]{0.08\textwidth}
     {
-        \small
-        \raggedright
-        \serviceEntryDate
+      \small
+      \raggedright
+      \serviceEntryDate
     }
   \end{minipage}
   \hfill
